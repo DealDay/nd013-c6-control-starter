@@ -301,8 +301,8 @@ int main ()
           **/
 //           error_steer = 0;
           if(x_points.size() > 0 && y_points.size() > 0){
-            // int index = std::min(x_points.size()-1, y_points.size()-1);
-            error_steer = angle_between_points(x_points[0], y_points[0], x_position, y_position) - yaw;
+            int index = std::min(x_points.size()-1, y_points.size()-1);
+            error_steer = angle_between_points(x_points[index], y_points[index], x_position, y_position) - yaw;
           } else {
             error_steer = 0.0;
           }
