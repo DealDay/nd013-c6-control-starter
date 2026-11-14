@@ -19,9 +19,9 @@ void PID::Init(double Kpi, double Kii, double Kdi, double output_lim_maxi, doubl
    /**
    * TODO: Initialize PID coefficients (and errors, if needed)
    **/
-   kp = Kpi;
-   ki = Kii;
-   kd = Kdi;
+   Kp = Kpi;
+   Ki = Kii;
+   Kd = Kdi;
    output_lim_max = output_lim_maxi;
    output_lim_min = output_lim_mini;
    delta_time = 0.0;
@@ -50,7 +50,7 @@ double PID::TotalError() {
     * The code should return a value in the interval [output_lim_mini, output_lim_maxi]
    */
     double control;
-    control = kp * p_error + ki * i_error + kd * d_error;
+    control = Kp * p_error + Ki * i_error + Kd * d_error;
     if (control > output_lim_max) {
       control = output_lim_max;
     }
