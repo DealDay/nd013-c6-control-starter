@@ -306,6 +306,7 @@ int main ()
           } else {
             error_steer = 0.0;
           }
+          std::cout << "error_steer: " << error_steer << std::endl;
 
           /**
           * TODO (step 3): uncomment these lines
