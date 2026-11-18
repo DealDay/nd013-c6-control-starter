@@ -225,9 +225,9 @@ int main ()
   **/
 
   PID pid_steer = PID();
-  pid_steer.Init(0.05, 0.0, 0.0, 1.2, -1.2);
+  pid_steer.Init(0.31, 0.001, 0.3, 1.2, -1.2);
   PID pid_throttle = PID();
-  pid_throttle.Init(0.05, 0.0, 0.0, 1.0, -1.0);
+  pid_throttle.Init(0.1, 0.001, 0.0, 1.0, -1.0);
 
   h.onMessage([&pid_steer, &pid_throttle, &new_delta_time, &timer, &prev_timer, &i, &prev_timer](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode)
   {
@@ -301,9 +301,12 @@ int main ()
           **/
 //           error_steer = 0;
           if(x_points.size() > 0 && y_points.size() > 0){
-            // int index = std::min(x_points.size()-1, y_points.size()-1);
+            int index = std::min(x_points.size(), y_points.size()) - 1;
+            if(std::abs(x_position - x_points[index]) < 0.1 && std::abs(y_position - y_points[index]) < 0.1){
+              index = std::max(0, index - 1);
+            }
             // error_steer = angle_between_points(x_points[-1], y_points[-1], x_position, y_position) - yaw;
-            error_steer = angle_between_points(x_position, y_position, x_points[-1], y_points[-1]) - yaw;
+            error_steer = angle_between_points(x_position, y_position, x_points[0], y_points[0]) - yaw;
           } else {
             error_steer = 0.0;
           }
