@@ -302,11 +302,14 @@ int main ()
 //           error_steer = 0;
           if(x_points.size() > 0 && y_points.size() > 0){
             int index = std::min(x_points.size(), y_points.size()) - 1;
-            if(std::abs(x_position - x_points[index]) < 0.1 && std::abs(y_position - y_points[index]) < 0.1){
-              index = std::max(0, index - 1);
+            if(std::hypot(x_points[0] - x_position, y_points[0] - y_position) < 1e-6){
+              error_steer = 0.0;
+            }
+            else{
+              error_steer = angle_between_points(x_position, y_position, x_points[0], y_points[0]) - yaw;
             }
             // error_steer = angle_between_points(x_points[-1], y_points[-1], x_position, y_position) - yaw;
-            error_steer = angle_between_points(x_position, y_position, x_points[0], y_points[0]) - yaw;
+            // error_steer = angle_between_points(x_position, y_position, x_points[0], y_points[0]) - yaw;
           } else {
             error_steer = 0.0;
           }
