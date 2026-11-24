@@ -295,19 +295,20 @@ int main ()
           // Compute steer error
           double error_steer;
           double steer_output;
-
+          int index = 0;
           /**
           * TODO (step 3): compute the steer error (error_steer) from the position and the desired trajectory
           **/
 //           error_steer = 0;
           if(x_points.size() > 0 && y_points.size() > 0){
-            int index = std::min(x_points.size(), y_points.size()) - 1;
-            if(std::hypot(x_points[index] - x_position, y_points[index] - y_position) < 1e-6){
-              error_steer = 0.0;
+            // index = std::min(x_points.size(), y_points.size()) - 1;
+            for(int j = 0; j < x_points.size() - 1; j++){
+              if(std::hypot(x_points[j] - x_position, y_points[j] - y_position) < 
+                 std::hypot(x_points[j+1] - x_position, y_points[j+1] - y_position)){
+                index = j;
+              }
             }
-            else{
-              error_steer = angle_between_points(x_position, y_position, x_points[index], y_points[index]) - yaw;
-            }
+            error_steer = angle_between_points(x_position, y_position, x_points[index], y_points[index]) - yaw;
           } else {
             error_steer = 0.0;
           }
@@ -345,7 +346,7 @@ int main ()
           * TODO (step 2): compute the throttle error (error_throttle) from the position and the desired speed
           **/
           // modify the following line for step 2
-          error_throttle = v_points[0] - velocity;
+          error_throttle = v_points[index] - velocity;
 
           double throttle_output = 0.0;
           double brake_output = 0.0;
