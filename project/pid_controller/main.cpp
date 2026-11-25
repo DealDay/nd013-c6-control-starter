@@ -167,6 +167,11 @@ void path_planner(vector<double>& x_points, vector<double>& y_points, vector<dou
 
   if(best_spirals.size() > 0)
   	best_spiral_idx = best_spirals[best_spirals.size()-1];
+    cout << "Best spiral idx: " << best_spiral_idx << endl;
+  if(best_spiral_idx == -1){
+  	cout << "Error: No best spiral found " << endl;
+  	return;
+  }
 
   int index = 0;
   int max_points = 20;
